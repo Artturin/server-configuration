@@ -81,6 +81,13 @@
     options kvm-amd nested=1
     options kvm ignore_msrs=1
   '';
+  boot.extraModulePackages = with config.boot.kernelPackages; [ zenpower ];
+  boot.blacklistedKernelModules = [
+    # Replaced with zenpower
+    "k10temp"
+  ];
+
+
   services.sanoid = {
     enable = true;
     datasets."nixstore/nix" = {
